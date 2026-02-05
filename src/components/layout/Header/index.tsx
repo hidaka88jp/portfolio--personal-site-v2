@@ -1,6 +1,8 @@
 import { Antonio } from 'next/font/google';
 import Link from 'next/link';
 
+import DesktopNavigation from '../DesktopNavigation';
+
 const antonio = Antonio({
   subsets: ['latin'],
 });
@@ -22,7 +24,7 @@ export default function Header() {
           </h1>
         </Link>
         <div className={mobileNavClass}>M-Nav</div>
-        <div className={desktopNavClass}>D-Nav</div>
+        <DesktopNavigation className={desktopNavClass} />
       </div>
     </header>
   );
