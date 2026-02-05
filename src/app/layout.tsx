@@ -1,18 +1,21 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import clsx from 'clsx';
+
+import { Inter } from 'next/font/google';
+import { Inconsolata } from 'next/font/google';
 
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const inter = Inter({
   subsets: ['latin'],
+  variable: '--font-inter',
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const inconsolata = Inconsolata({
   subsets: ['latin'],
+  variable: '--font-inconsolata',
 });
 
 export const metadata: Metadata = {
@@ -26,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang='en' className={clsx(inter.variable, inconsolata.variable, 'scroll-smooth')}>
+      <body className='text-gray'>
         <Header />
         <main>{children}</main>
         <Footer />
