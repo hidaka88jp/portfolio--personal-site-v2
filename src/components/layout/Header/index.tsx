@@ -6,6 +6,9 @@ const antonio = Antonio({
 });
 
 export default function Header() {
+  const mobileNavClass = 'z-20 lg:hidden';
+  const desktopNavClass = 'hidden lg:flex';
+
   return (
     <header className='px-4 pt-4 pb-5 sm:px-8 sm:pt-9 sm:pb-7'>
       <div className='mx-auto flex w-full max-w-94 items-center justify-between sm:max-w-5xl sm:items-baseline'>
@@ -18,7 +21,8 @@ export default function Header() {
             IDIKA
           </h1>
         </Link>
-        <div>Nav</div>
+        <div className={mobileNavClass}>M-Nav</div>
+        <div className={desktopNavClass}>D-Nav</div>
       </div>
     </header>
   );
