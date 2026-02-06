@@ -2,13 +2,14 @@ import { Antonio } from 'next/font/google';
 import Link from 'next/link';
 
 import DesktopNavigation from '../DesktopNavigation';
+import MobileNavigation from '../MobileNavigation';
 
 const antonio = Antonio({
   subsets: ['latin'],
 });
 
 export default function Header() {
-  const mobileNavClass = 'z-20 lg:hidden';
+  const mobileNavClass = 'lg:hidden';
   const desktopNavClass = 'hidden lg:flex';
 
   return (
@@ -23,7 +24,7 @@ export default function Header() {
             IDIKA
           </h1>
         </Link>
-        <div className={mobileNavClass}>M-Nav</div>
+        <MobileNavigation className={mobileNavClass} />
         <DesktopNavigation className={desktopNavClass} />
       </div>
     </header>
