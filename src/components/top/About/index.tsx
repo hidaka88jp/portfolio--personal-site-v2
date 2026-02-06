@@ -1,8 +1,38 @@
 import Image from 'next/image';
 
+import { TECH_STACKS } from '@/constants/techStacks';
+
 import TopSectionTitle from '@/components/shared/TopSectionTitle';
+import TechStackBadge from '@/components/shared/TechStackBadge';
+
+const TOP_PAGE_TECH_STACK_IDS = [
+  'html',
+  'css',
+  'sass',
+  'bem',
+  'javascript',
+  'typescript',
+  'react',
+  'nextjs',
+  'tailwindcss',
+  'css-modules',
+  'eslint',
+  'prettier',
+  'husky',
+  'jest',
+  'vitest',
+  'testing-library',
+  'nodejs',
+  'git',
+  'github',
+  'github-actions',
+  'firebase-hosting',
+  'vercel',
+];
 
 export default function About() {
+  const topPageStacks = TECH_STACKS.filter((stack) => TOP_PAGE_TECH_STACK_IDS.includes(stack.id));
+
   return (
     <section id='about' className='px-4 pb-16 sm:px-8 sm:pb-28'>
       <div className='mx-auto w-full max-w-94 sm:max-w-5xl'>
@@ -35,7 +65,16 @@ export default function About() {
               <h3 className='font-inconsolata mb-1 text-xl font-medium sm:font-normal'>Skills</h3>
               <div className='bg-accent h-0.5 w-8' />
             </div>
-            {/* Skills list with tech stack badge */}
+            <div className='flex flex-wrap gap-2 sm:gap-2.5'>
+              {topPageStacks.map((techStack) => (
+                <TechStackBadge
+                  key={techStack.id}
+                  name={techStack.name}
+                  Icon={techStack.Icon}
+                  color={techStack.color}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
