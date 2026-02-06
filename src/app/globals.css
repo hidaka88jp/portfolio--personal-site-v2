@@ -5,5 +5,9 @@
 }
 
 @theme {
+  --color-accent: #84c49c;
+  --color-gray: #434343;
+  --color-gray-light: #f0f0f0;
+
   --font-inconsolata: var(--font-inconsolata);
 }
