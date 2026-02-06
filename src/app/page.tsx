@@ -1,8 +1,10 @@
+import Hero from '@/components/top/Hero';
+
 export default function Home() {
   return (
-    <div>
+    <>
+      <Hero />
       <p className='font-inconsolata'>Home Page</p>
-      <p>test</p>
-    </div>
+    </>
   );
 }
