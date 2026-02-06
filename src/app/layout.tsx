@@ -48,9 +48,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' className={clsx(inter.variable, inconsolata.variable, 'scroll-smooth')}>
-      <body className='text-gray'>
+      <body className='text-gray flex min-h-screen flex-col'>
         <Header />
-        <main>{children}</main>
+        <main className='flex-1'>{children}</main>
         <Footer />
       </body>
     </html>
