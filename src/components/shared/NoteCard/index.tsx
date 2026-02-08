@@ -16,7 +16,7 @@ export default function NoteCard({ id, title, techStack, thumbnail }: NotesCardP
         alt={`${title} thumbnail`}
         height={thumbnail.height}
         width={thumbnail.width}
-        className='col-span-1 object-cover lg:aspect-3/2 lg:w-full'
+        className='col-span-1 w-full object-cover lg:aspect-3/2'
       />
       <div className='col-span-1 pr-1'>
         {/* badge */}
