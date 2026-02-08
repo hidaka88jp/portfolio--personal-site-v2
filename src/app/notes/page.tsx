@@ -4,6 +4,7 @@ import type { NotesSearchParams } from '@/types/notes';
 import { getTechStackList } from '@/lib/microcms';
 import NotesList from '@/components/notes/NotesList';
 import LinkButton from '@/components/shared/LinkButton';
+import TechStackList from '@/components/notes/TechStackList';
 
 type NotesPageProps = {
   searchParams: Promise<NotesSearchParams>;
@@ -54,6 +55,7 @@ export default async function NotesPage({ searchParams }: NotesPageProps) {
                   Category
                 </h3>
               </div>
+              <TechStackList techStacks={techStacks.contents} />
             </div>
           </div>
           <div className='flex flex-col items-center justify-center'>
