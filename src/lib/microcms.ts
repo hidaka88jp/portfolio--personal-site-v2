@@ -42,6 +42,20 @@ export const getWorksList = async (queries?: MicroCMSQueries) => {
   return listData;
 };
 
+export async function getWorkDetail(contentId: string, draftKey?: string) {
+  try {
+    const workDetail = await client.get<Works>({
+      endpoint: 'works',
+      contentId,
+      queries: draftKey ? { draftKey } : undefined,
+    });
+    return workDetail;
+  } catch (error) {
+    console.error('getWorkDetail error:', error);
+    return null;
+  }
+}
+
 export const getNotesList = async (queries?: MicroCMSQueries) => {
   const listData = await client.getList<Notes>({
     endpoint: 'notes',
