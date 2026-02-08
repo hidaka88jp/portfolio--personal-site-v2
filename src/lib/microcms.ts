@@ -64,7 +64,7 @@ export const getNotesList = async (queries?: MicroCMSQueries) => {
   return listData;
 };
 
-export const getTechStacksList = async () => {
+export const getTechStackList = async () => {
   const listData = await client.getList<TechStack>({
     endpoint: 'tech-stacks',
     queries: { limit: 100 },
