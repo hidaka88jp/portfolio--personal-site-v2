@@ -8,7 +8,7 @@ type WorkCardProps = Pick<Works, 'id' | 'title' | 'category' | 'thumbnail'>;
 export default function WorkCard({ id, title, category, thumbnail }: WorkCardProps) {
   return (
     <Link className='block' href={`/${id}`} aria-label={`View details for ${title}`}>
-      <div className='group relative w-full cursor-pointer pr-6 hover:opacity-85'>
+      <div className='group relative w-full cursor-pointer pr-6 hover:opacity-80'>
         <div className='overflow-hidden border-r-2 border-b-2 border-gray-200'>
           <Image
             src={thumbnail.url}
