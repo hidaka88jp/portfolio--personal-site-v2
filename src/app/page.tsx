@@ -6,8 +6,12 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <About />
-      <TopWorks />
+      <div className='px-4 sm:px-8'>
+        <div className='mx-auto w-full max-w-94 sm:max-w-5xl'>
+          <About />
+          <TopWorks />
+        </div>
+      </div>
     </>
   );
 }
