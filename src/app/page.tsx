@@ -1,6 +1,7 @@
 import Hero from '@/components/top/Hero';
 import About from '@/components/top/About';
 import TopWorks from '@/components/top/TopWorks';
+import TopNotes from '@/components/top/TopNotes';
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
         <div className='mx-auto w-full max-w-94 sm:max-w-5xl'>
           <About />
           <TopWorks />
+          <TopNotes />
         </div>
       </div>
     </>
