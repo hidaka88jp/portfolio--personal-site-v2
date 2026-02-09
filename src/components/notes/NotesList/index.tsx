@@ -26,6 +26,7 @@ export default async function NotesList({ searchParams, techStacks }: NotesListP
   const offset = (currentPage - 1) * limit;
   const notes = await getNotesList({ filters, limit, offset });
 
+  // Calculate total pages for pagination
   const totalPages = Math.ceil(notes.totalCount / limit);
 
   return (
