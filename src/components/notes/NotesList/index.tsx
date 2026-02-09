@@ -1,8 +1,11 @@
 import Link from 'next/link';
+import clsx from 'clsx';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { FaArrowDownShortWide } from 'react-icons/fa6';
 import { getNotesList } from '@/lib/microcms';
 import type { TechStack } from '@/lib/microcms';
 import type { NotesSearchParams } from '@/types/notes';
+import { TECH_STACKS } from '@/constants/techStacks';
 
 type NotesListProps = {
   searchParams: NotesSearchParams;
@@ -29,8 +32,37 @@ export default async function NotesList({ searchParams, techStacks }: NotesListP
   // Calculate total pages for pagination
   const totalPages = Math.ceil(notes.totalCount / limit);
 
+  // Get the tech stack data for the current category
+  const techStack = currentCategory ? TECH_STACKS.find((s) => s.id === currentCategory) : undefined;
+  const Icon = techStack?.Icon;
+
   return (
     <section>
+      {/* Selected Tech Stack */}
+      <div className='mb-8 flex items-end justify-between lg:block'>
+        <div
+          className={clsx(
+            'flex w-fit items-center gap-2 rounded-md border px-2 py-1',
+            currentCategory ? 'text-white' : 'border-gray text-gray bg-transparent'
+          )}
+          style={
+            currentCategory
+              ? { backgroundColor: techStack?.color, borderColor: techStack?.color }
+              : {}
+          }
+        >
+          {Icon && currentCategory && <Icon className='h-5 w-5 sm:h-6 sm:w-6' />}
+          <p className='text-xl sm:text-2xl'>{currentCategory ? techStack?.name : 'ALL'}</p>
+        </div>
+        <Link
+          href='#category'
+          className='text-gray flex items-center gap-0.5 border-b lg:hidden'
+          aria-label='Jump to category filter'
+        >
+          <FaArrowDownShortWide className='h-4 w-4' />
+          <p>Category</p>
+        </Link>
+      </div>
       <ul>
         {notes.contents.length === 0 ? (
           <li>
