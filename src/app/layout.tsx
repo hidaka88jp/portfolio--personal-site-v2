@@ -47,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' className={clsx(inter.variable, inconsolata.variable, 'scroll-smooth')}>
+    <html lang='en' className={clsx(inter.variable, inconsolata.variable)}>
       <body className='text-gray flex min-h-screen flex-col'>
         <Header />
         <main className='flex-1'>{children}</main>
