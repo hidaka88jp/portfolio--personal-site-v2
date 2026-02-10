@@ -34,6 +34,13 @@ const client = createClient({
   apiKey: process.env.MICROCMS_API_KEY,
 });
 
+export const getAllWorksList = async () => {
+  const listData = await client.getAllContents<Works>({
+    endpoint: 'works',
+  });
+  return listData;
+};
+
 export const getWorksList = async (queries?: MicroCMSQueries) => {
   const listData = await client.getList<Works>({
     endpoint: 'works',
@@ -55,6 +62,13 @@ export async function getWorkDetail(contentId: string, draftKey?: string) {
     return null;
   }
 }
+
+export const getAllNotesList = async () => {
+  const listData = await client.getAllContents<Notes>({
+    endpoint: 'notes',
+  });
+  return listData;
+};
 
 export const getNotesList = async (queries?: MicroCMSQueries) => {
   const listData = await client.getList<Notes>({
