@@ -34,7 +34,7 @@ export default function MobileNavigation({ className }: Props) {
       {isOpen && (
         <div
           data-testid='overlay'
-          className='fixed inset-0 bg-black/30'
+          className='fixed inset-0 z-20 bg-black/30'
           onClick={() => setIsOpen(false)}
         />
       )}
@@ -43,7 +43,7 @@ export default function MobileNavigation({ className }: Props) {
       <nav
         data-testid='mobile-nav'
         className={clsx(
-          'bg-gray fixed inset-y-0 right-0 z-10 flex w-64 flex-col items-center justify-start space-y-6 text-lg text-white transition-transform duration-300 ease-in-out',
+          'bg-gray fixed inset-y-0 right-0 z-30 flex w-64 flex-col items-center justify-start space-y-6 text-lg text-white transition-transform duration-300 ease-in-out',
           isOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
