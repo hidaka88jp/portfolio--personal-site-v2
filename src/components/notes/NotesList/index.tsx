@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import clsx from 'clsx';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { FaArrowDownShortWide } from 'react-icons/fa6';
@@ -6,6 +7,7 @@ import { getNotesList } from '@/lib/microcms';
 import type { TechStack } from '@/lib/microcms';
 import type { NotesSearchParams } from '@/types/notes';
 import { TECH_STACKS } from '@/constants/techStacks';
+import TechStackLabel from '@/components/shared/TechStackLabel';
 
 type NotesListProps = {
   searchParams: NotesSearchParams;
@@ -25,7 +27,7 @@ export default async function NotesList({ searchParams, techStacks }: NotesListP
   const currentCategory = category && validCategoryIds.includes(category) ? category : undefined;
   const filters = currentCategory ? `techStack[contains]${currentCategory}` : undefined;
 
-  const limit = 3;
+  const limit = 5;
   const offset = (currentPage - 1) * limit;
   const notes = await getNotesList({ filters, limit, offset });
 
@@ -35,6 +37,14 @@ export default async function NotesList({ searchParams, techStacks }: NotesListP
   // Get the tech stack data for the current category
   const techStack = currentCategory ? TECH_STACKS.find((s) => s.id === currentCategory) : undefined;
   const Icon = techStack?.Icon;
+
+  // Construct current URL with query parameters for Link components
+  const listParams = new URLSearchParams();
+
+  if (page) listParams.set('page', page);
+  if (currentCategory) listParams.set('category', currentCategory);
+
+  const listUrl = listParams.toString().length > 0 ? `/notes?${listParams.toString()}` : '/notes';
 
   return (
     <section>
@@ -63,15 +73,38 @@ export default async function NotesList({ searchParams, techStacks }: NotesListP
           <p>Category</p>
         </Link>
       </div>
-      <ul>
+      <ul className='space-y-9 sm:space-y-10'>
         {notes.contents.length === 0 ? (
           <li>
             <p>No notes found.</p>
           </li>
         ) : (
           notes.contents.map((note) => (
-            <li key={note.id}>
-              <h3>{note.title}</h3>
+            <li
+              className='w-full cursor-pointer border-b border-gray-400 pb-2 hover:opacity-70 sm:border-r-0 sm:pb-4'
+              key={note.id}
+            >
+              <Link
+                href={{
+                  pathname: `/notes/${note.id}`,
+                  query: {
+                    from: listUrl,
+                  },
+                }}
+                className='grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-7'
+              >
+                <Image
+                  src={note.thumbnail.url}
+                  alt={`${note.title} thumbnail`}
+                  height={note.thumbnail.height}
+                  width={note.thumbnail.width}
+                  className='col-span-1 aspect-3/2 w-full object-cover sm:col-span-1'
+                />
+                <div className='col-span-1 sm:col-span-2'>
+                  <TechStackLabel techStacks={note.techStack} className='pt-0 sm:pt-2' />
+                  <h3>{note.title}</h3>
+                </div>
+              </Link>
             </li>
           ))
         )}
