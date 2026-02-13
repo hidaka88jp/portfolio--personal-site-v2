@@ -8,6 +8,8 @@ import type { TechStack } from '@/lib/microcms';
 import type { NotesSearchParams } from '@/types/notes';
 import { TECH_STACKS } from '@/constants/techStacks';
 import TechStackLabel from '@/components/shared/TechStackLabel';
+import { buildNotesQueryState } from '@/lib/buildNotesQueryState';
+import { buildPaginationState } from '@/lib/buildPaginationState';
 
 type NotesListProps = {
   searchParams: NotesSearchParams;
@@ -15,36 +17,34 @@ type NotesListProps = {
 };
 
 export default async function NotesList({ searchParams, techStacks }: NotesListProps) {
-  const validCategoryIds = techStacks.map((stack) => stack.id);
+  const base = buildNotesQueryState({
+    page: searchParams.page,
+    category: searchParams.category,
+    techStacks,
+  });
 
-  const { page, category } = searchParams;
-  const currentPage = page ? Number(page) : 1;
-
-  if (!Number.isInteger(currentPage) || currentPage < 1) {
+  if (base.isInvalidPage) {
     return <h2>Invalid Page</h2>;
   }
 
-  const currentCategory = category && validCategoryIds.includes(category) ? category : undefined;
-  const filters = currentCategory ? `techStack[contains]${currentCategory}` : undefined;
+  const notes = await getNotesList({
+    filters: base.filters,
+    limit: base.limit,
+    offset: base.offset,
+  });
 
-  const limit = 5;
-  const offset = (currentPage - 1) * limit;
-  const notes = await getNotesList({ filters, limit, offset });
-
-  // Calculate total pages for pagination
-  const totalPages = Math.ceil(notes.totalCount / limit);
+  const pagination = buildPaginationState({
+    limit: base.limit,
+    currentPage: base.currentPage,
+    totalCount: notes.totalCount,
+    currentCategory: base.currentCategory,
+  });
 
   // Get the tech stack data for the current category
-  const techStack = currentCategory ? TECH_STACKS.find((s) => s.id === currentCategory) : undefined;
+  const techStack = base.currentCategory
+    ? TECH_STACKS.find((s) => s.id === base.currentCategory)
+    : undefined;
   const Icon = techStack?.Icon;
-
-  // Construct current URL with query parameters for Link components
-  const listParams = new URLSearchParams();
-
-  if (page) listParams.set('page', page);
-  if (currentCategory) listParams.set('category', currentCategory);
-
-  const listUrl = listParams.toString().length > 0 ? `/notes?${listParams.toString()}` : '/notes';
 
   return (
     <section>
@@ -53,16 +53,16 @@ export default async function NotesList({ searchParams, techStacks }: NotesListP
         <div
           className={clsx(
             'flex w-fit items-center gap-2 rounded-md border px-2 py-1',
-            currentCategory ? 'text-white' : 'border-gray text-gray bg-transparent'
+            base.currentCategory ? 'text-white' : 'border-gray text-gray bg-transparent'
           )}
           style={
-            currentCategory
+            base.currentCategory
               ? { backgroundColor: techStack?.color, borderColor: techStack?.color }
               : {}
           }
         >
-          {Icon && currentCategory && <Icon className='h-5 w-5 sm:h-6 sm:w-6' />}
-          <p className='text-xl sm:text-2xl'>{currentCategory ? techStack?.name : 'ALL'}</p>
+          {Icon && base.currentCategory && <Icon className='h-5 w-5 sm:h-6 sm:w-6' />}
+          <p className='text-xl sm:text-2xl'>{base.currentCategory ? techStack?.name : 'ALL'}</p>
         </div>
         <Link
           href='#category'
@@ -88,7 +88,7 @@ export default async function NotesList({ searchParams, techStacks }: NotesListP
                 href={{
                   pathname: `/notes/${note.id}`,
                   query: {
-                    from: listUrl,
+                    from: base.listUrl,
                   },
                 }}
                 className='grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-7'
@@ -110,40 +110,40 @@ export default async function NotesList({ searchParams, techStacks }: NotesListP
         )}
       </ul>
       {/* Pagination */}
-      {totalPages > 1 && (
+      {pagination.totalPages > 1 && (
         <nav className='border-gray mx-auto mt-6 flex w-fit items-center gap-5 rounded-md border px-4 py-1'>
-          {currentPage === 1 ? (
-            <span className='flex cursor-default items-center gap-1 px-1.5 text-gray-300'>
-              <IoIosArrowBack className='h-5 w-5' />
-              Prev
-            </span>
-          ) : (
+          {pagination.hasPrev ? (
             <Link
-              href={`/notes?page=${currentPage - 1}${currentCategory ? `&category=${currentCategory}` : ''}`}
+              href={pagination.prevUrl}
               className='hover:text-accent flex items-center gap-1 px-1.5'
             >
               <IoIosArrowBack className='h-5 w-5' />
               Prev
             </Link>
+          ) : (
+            <span className='flex cursor-default items-center gap-1 px-1.5 text-gray-300'>
+              <IoIosArrowBack className='h-5 w-5' />
+              Prev
+            </span>
           )}
           <div className='bg-gray h-3 w-px' />
           <p className='text-sm'>
-            {currentPage} / {totalPages}
+            {pagination.currentPage} / {pagination.totalPages}
           </p>
           <div className='bg-gray h-3 w-px' />
-          {currentPage === totalPages ? (
-            <span className='flex cursor-default items-center gap-1 px-1.5 text-gray-300'>
-              Next
-              <IoIosArrowForward className='h-5 w-5' />
-            </span>
-          ) : (
+          {pagination.hasNext ? (
             <Link
-              href={`/notes?page=${currentPage + 1}${currentCategory ? `&category=${currentCategory}` : ''}`}
+              href={pagination.nextUrl}
               className='hover:text-accent flex items-center gap-1 px-1.5'
             >
               Next
               <IoIosArrowForward className='h-5 w-5' />
             </Link>
+          ) : (
+            <span className='flex cursor-default items-center gap-1 px-1.5 text-gray-300'>
+              Next
+              <IoIosArrowForward className='h-5 w-5' />
+            </span>
           )}
         </nav>
       )}
