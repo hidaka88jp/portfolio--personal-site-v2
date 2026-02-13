@@ -58,4 +58,33 @@ describe('page validation', () => {
   });
 });
 
-describe('category validation', () => {});
+describe('category validation', () => {
+  test('currentCategory and filter should be set when category is valid', () => {
+    const result = buildNotesQueryState({
+      category: 'react',
+      techStacks: mockStacks,
+    });
+
+    expect(result.currentCategory).toBe('react');
+    expect(result.filters).toBe('techStack[contains]react');
+  });
+
+  test('currentCategory and filter should be undefined when category is not provided', () => {
+    const result = buildNotesQueryState({
+      techStacks: mockStacks,
+    });
+
+    expect(result.currentCategory).toBeUndefined();
+    expect(result.filters).toBeUndefined();
+  });
+
+  test('currentCategory and filter should be undefined when category is invalid', () => {
+    const result = buildNotesQueryState({
+      category: 'php',
+      techStacks: mockStacks,
+    });
+
+    expect(result.currentCategory).toBeUndefined();
+    expect(result.filters).toBeUndefined();
+  });
+});
