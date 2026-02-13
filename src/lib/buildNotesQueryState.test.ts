@@ -1,6 +1,6 @@
 import { buildNotesQueryState } from './buildNotesQueryState';
 import type { TechStack } from '@/lib/microcms';
-import { test, describe } from '@jest/globals';
+import { test, describe, expect } from '@jest/globals';
 
 const mockStacks: TechStack[] = [
   { id: 'react', name: 'React' },
