@@ -1,6 +1,6 @@
 import { buildNotesQueryState } from './buildNotesQueryState';
 import type { TechStack } from '@/lib/microcms';
-import { test } from '@jest/globals';
+import { test, describe } from '@jest/globals';
 
 const mockStacks: TechStack[] = [
   { id: 'react', name: 'React' },
@@ -86,5 +86,53 @@ describe('category validation', () => {
 
     expect(result.currentCategory).toBeUndefined();
     expect(result.filters).toBeUndefined();
+  });
+
+  describe('listUrl construction', () => {
+    test('listUrl should be /notes when no page or category', () => {
+      const result = buildNotesQueryState({
+        techStacks: mockStacks,
+      });
+
+      expect(result.listUrl).toBe('/notes');
+    });
+
+    test('listUrl should include page when page is greater than 1', () => {
+      const result = buildNotesQueryState({
+        page: '2',
+        techStacks: mockStacks,
+      });
+
+      expect(result.listUrl).toBe('/notes?page=2');
+    });
+
+    test('listUrl should include category when category is valid', () => {
+      const result = buildNotesQueryState({
+        category: 'react',
+        techStacks: mockStacks,
+      });
+
+      expect(result.listUrl).toBe('/notes?category=react');
+    });
+
+    test('listUrl should include both page and category when both are provided', () => {
+      const result = buildNotesQueryState({
+        page: '3',
+        category: 'nextjs',
+        techStacks: mockStacks,
+      });
+
+      expect(result.listUrl).toBe('/notes?page=3&category=nextjs');
+    });
+
+    test('listUrl should not include page when page is 1', () => {
+      const result = buildNotesQueryState({
+        page: '1',
+        category: 'react',
+        techStacks: mockStacks,
+      });
+
+      expect(result.listUrl).toBe('/notes?category=react');
+    });
   });
 });
