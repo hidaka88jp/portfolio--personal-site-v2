@@ -4,6 +4,7 @@ import { formatDate } from '@/lib/formatDate';
 import Image from 'next/image';
 import TechStackLabel from '@/components/shared/TechStackLabel';
 import LinkButton from '@/components/shared/LinkButton';
+import { buildBackNavigationState } from '@/lib/buildBackNavigationState';
 import { FaRegClock } from 'react-icons/fa6';
 
 type NoteDetailPageProps = {
@@ -25,8 +26,7 @@ export async function generateMetadata({ params, searchParams }: NoteDetailPageP
 
 export default async function NoteDetailPage({ params, searchParams }: NoteDetailPageProps) {
   const { from: rawFrom, draftKey } = await searchParams;
-  const from = rawFrom ? decodeURIComponent(rawFrom) : '/notes';
-  const backLabel = from.includes('#notes') ? 'Back to Top' : 'Back to Notes';
+  const { from, backLabel } = buildBackNavigationState(rawFrom);
 
   const { id } = await params;
   const note = await getNoteDetail(id, draftKey);
