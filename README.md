@@ -40,7 +40,6 @@ https://github.com/hidaka88jp/portfolio--personal-site
 - Reused existing types with `Pick` to avoid duplicated type definitions and prevent mismatches between API response types and UI prop types.
 - Simplified URL-driven state management by relying on `Link` instead of `router.push` and `useState`, enabling Server Component rendering.
 - Refactored data transformation logic to run once before rendering, rather than executing lookups inside every `map` iteration.
-- Reconsidered rendering strategy and switched from ISR to SSR based on realistic traffic expectations.
 - Enhanced metadata with Open Graph tags.
 - Added sitemap and robots configuration to align with common web and SEO practices.
 - Refined testing strategy by focusing on meaningful logic tests instead of superficial UI assertions.
