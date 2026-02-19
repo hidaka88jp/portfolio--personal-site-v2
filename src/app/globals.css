@@ -251,7 +251,7 @@
   }
 
   .article .btn--demo-btn {
-    @apply text-gray hover:bg-accent border-1 border-current bg-white hover:text-white;
+    @apply text-gray hover:bg-accent border border-current bg-white hover:text-white;
   }
 
   .article .btn--demo-btn::before {
@@ -283,7 +283,7 @@
   }
 
   .article .btn--github-btn {
-    @apply bg-gray hover:bg-accent border-1 border-current text-white;
+    @apply bg-gray hover:bg-accent border border-current text-white;
   }
 
   .article .btn--github-btn::before {
@@ -486,7 +486,7 @@
   }
 
   .article .NotesList__item {
-    @apply relative grid w-full cursor-pointer grid-cols-2 gap-3 border-b-1 border-gray-400 pb-2 hover:opacity-70 lg:block lg:border-r-1 lg:pb-6;
+    @apply relative grid w-full cursor-pointer grid-cols-2 gap-3 border-b border-gray-400 pb-2 hover:opacity-70 lg:block lg:border-r lg:pb-6;
   }
 
   .article .NotesList__item-thumbnail {
