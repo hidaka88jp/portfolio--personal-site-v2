@@ -371,13 +371,25 @@
     display: inline-block;
     width: 1rem;
     height: 1rem;
-    background: url('/icons/link-icon.svg') no-repeat center/contain;
     margin-left: 0.1rem;
+    margin-right: 0.5rem;
     vertical-align: middle;
   }
 
-  .article .link:hover::after {
-    background: url('/icons/link-icon-accent.svg') no-repeat center/contain;
+  .article .link--external::after {
+    background: url('/icons/link-external-icon.svg') no-repeat center/contain;
+  }
+
+  .article .link--external:hover::after {
+    background: url('/icons/link-external-icon-accent.svg') no-repeat center/contain;
+  }
+
+  .article .link--internal::after {
+    background: url('/icons/link-internal-icon.svg') no-repeat center/contain;
+  }
+
+  .article .link--internal:hover::after {
+    background: url('/icons/link-internal-icon-accent.svg') no-repeat center/contain;
   }
 
   /* Tech Stack Content */
@@ -553,7 +565,6 @@
     height: 1rem;
   }
 
-  /*  */
   .article .challenge-list__item--solution + .challenge-list__item--challenge {
     @apply mt-6 border-t border-gray-300 pt-6;
   }
