@@ -12,7 +12,6 @@
   --font-inconsolata: var(--font-inconsolata);
 }
 
-
 @layer components {
   /* Tech Stack Badge */
   .article .tech-stack-badge {
@@ -91,20 +90,20 @@
   }
 
   .article .tech-stack-badge--prisma {
-    background-color: #2D3748;
+    background-color: #2d3748;
   }
 
   /* Database */
   .article .tech-stack-badge--mysql {
-    background-color: #4479A1;
+    background-color: #4479a1;
   }
 
   .article .tech-stack-badge--postgresql {
-    background-color: #4169E1;
+    background-color: #4169e1;
   }
 
   .article .tech-stack-badge--sqlite {
-    background-color: #003B57;
+    background-color: #003b57;
   }
 
   .article .tech-stack-badge--mongodb {
@@ -506,19 +505,19 @@
   }
 
   /* Challenge List */
-  .article .challenge-list__items {
-    @apply mb-6 border-b border-gray-300 pb-2 pl-8;
+  .article .challenge-list__items + .challenge-list__items {
+    @apply mt-6 border-t border-gray-300 pt-6;
   }
 
   .article .challenge-list__item {
-    @apply relative mb-1 sm:mb-2;
+    @apply relative mb-1 sm:mb-2 pl-8;
   }
 
   .article .challenge-list__item::before {
     content: '';
     position: absolute;
-    top: 0em;
-    left: -2em;
+    top: 0;
+    left: 0;
     width: 1.4em;
     height: 1.4em;
     background: var(--color-accent);
@@ -542,16 +541,29 @@
   .article .challenge-list__item--challenge::after {
     @apply font-medium text-white;
     content: '?';
-    top: -0.04em;
-    left: -1.55em;
+    top: -0.05em;
+    left: 0.45em;
   }
 
   .article .challenge-list__item--solution::after {
     background: url('/icons/arrow-forward-solution.svg') no-repeat center/contain;
-    top: 0.18em;
-    left: -1.77em;
+    top: 0.2em;
+    left: 0.24em;
     width: 1rem;
     height: 1rem;
+  }
+
+  /*  */
+  .article .challenge-list__item--solution + .challenge-list__item--challenge {
+    @apply mt-6 border-t border-gray-300 pt-6;
+  }
+
+  .article .challenge-list__item--solution + .challenge-list__item::before {
+    top: 1.5rem;
+  }
+
+  .article .challenge-list__item--solution + .challenge-list__item::after {
+    top: calc(1.5rem - 0.05em);
   }
 
   /* code */
