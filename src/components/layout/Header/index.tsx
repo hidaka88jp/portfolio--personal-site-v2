@@ -21,7 +21,7 @@ export default function Header() {
             aria-label='Takanori Hidaka'
           >
             <span className='text-accent'>T</span>AKANORI <span className='text-accent'>H</span>
-            IDIKA
+            IDAKA
           </h1>
         </Link>
         <MobileNavigation className={mobileNavClass} />
